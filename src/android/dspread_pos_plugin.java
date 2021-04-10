@@ -98,9 +98,10 @@ public class dspread_pos_plugin extends CordovaPlugin {
 			boolean a=pos.scanQPos2Mode(activity, 10);
 			Toast.makeText(cordova.getActivity(), "scan success "+a, Toast.LENGTH_LONG).show();
 		}else if(action.equals("setAmount")){
-			amount = args.getInt(0)+"";
-			pos.setAmount(amount,cashbackAmount,currencyCode,transactionType);
-			TRACE.d("args: "+args.getInt(0));
+					TransactionType transactionType = TransactionType.GOODS;
+					String amount = args.getString(0);
+					pos.setPosDisplayAmountFlag(true);
+					pos.setAmount(amount, "", "566", transactionType);
 		}else if(action.equals("connectBluetoothDevice")){//connect
 			pos.stopScanQPos2Mode();
 			boolean isAutoConnect=args.getBoolean(0);
@@ -695,7 +696,7 @@ public class dspread_pos_plugin extends CordovaPlugin {
 		public void onRequestNoQposDetected() {
 			TRACE.w("onRequestNoQposDetected");
 			Toast.makeText(cordova.getActivity(), "onRequestNoQposDetected", Toast.LENGTH_LONG).show();
-			callbackKeepResult(PluginResult.Status.OK,true,"connectBluetoothDevice","onRequestNoQposDetected");
+			//callbackKeepResult(PluginResult.Status.OK,true,"connectBluetoothDevice","onRequestNoQposDetected");
 		}
 
 		@Override
